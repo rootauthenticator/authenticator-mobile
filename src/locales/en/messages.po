@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2023-08-13 14:42+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/components/SelectedAccounts.tsx:49
+msgid "{counter, plural, one {# selected} other {# selected}}"
+msgstr "{counter, plural, one {# selected} other {# selected}}"
+
+#: src/components/SelectedAccounts.tsx:34
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/components/SelectedAccounts.tsx:37
+msgid "Confirm"
+msgstr "Confirm"
+
+#: src/components/SelectedAccounts.tsx:32
+msgid "Delete"
+msgstr "Delete"
+
+#: src/components/Filterbar.tsx:45
+msgid "Filter accounts"
+msgstr "Filter accounts"
+
+#: src/components/AccountList.tsx:49
+msgid "No account found"
+msgstr "No account found"
+
+#: src/pages/Home.tsx:121
+msgid "Scan a QR code"
+msgstr "Scan a QR code"
+
+#: src/components/SelectAccounts.tsx:21
+msgid "Select accounts"
+msgstr "Select accounts"
+
+#: src/pages/Scan.tsx:76
+msgid "The app needs access to the camera to scan for QR codes."
+msgstr "The app needs access to the camera to scan for QR codes."
+
+#: src/components/SelectedAccounts.tsx:32
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+#: src/pages/Home.tsx:117
+msgid "You don't have any accounts yet"
+msgstr "You don't have any accounts yet"
