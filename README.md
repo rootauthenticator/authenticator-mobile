@@ -1,5 +1,7 @@
 # Root Authenticator
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/rootauthenticator/authenticator-mobile/badge)](https://securityscorecards.dev/viewer/?uri=github.com/rootauthenticator/authenticator-mobile)
+
 Root Authenticator is an open source two-factor authentication mobile application for systems utilizing one-time password (OTP) protocols.
 
 Root Authenticator supports:
