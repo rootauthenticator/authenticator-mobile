@@ -19,7 +19,7 @@ Root Authenticator supports:
 
 # Requirements
 
-- Android 5.0+
+- Android 8.0+
 - iOS 13.4+
 
 # User agreement

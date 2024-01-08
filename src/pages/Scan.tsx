@@ -8,7 +8,11 @@ import {
   View,
 } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
-import {BarCodeScanner} from 'expo-barcode-scanner';
+import {
+  Camera,
+  useCameraDevice,
+  useCodeScanner,
+} from 'react-native-vision-camera';
 import {Trans} from '@lingui/macro';
 import 'react-native-get-random-values';
 import {v1 as uuidv1} from 'uuid';
@@ -16,43 +20,54 @@ import keyUriParser from '../utils/keyUriParser';
 import type {Account} from '../types';
 
 const Scan = ({navigation}: {navigation: any}) => {
+  const device = useCameraDevice('back');
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [scanned, setScanned] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+  const canScan = hasPermission === true && device !== null;
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
-      const {status} = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      const permission = await Camera.requestCameraPermission();
+      setHasPermission(permission === 'granted');
     };
 
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleScan = async ({data}: {data: any}) => {
-    setScanned(true);
+  const handleScan = useCodeScanner({
+    codeTypes: ['qr'],
+    onCodeScanned: async codes => {
+      setIsActive(false);
 
-    try {
-      const result = keyUriParser(data);
+      if (!codes.length) {
+        return;
+      }
 
-      const accounts: Account[] = JSON.parse(
-        (await EncryptedStorage.getItem('accounts')) || '[]',
-      );
+      const value = codes[0].value || '';
 
-      const account: Account = {
-        id: uuidv1(),
-        text: data,
-        ...result,
-      };
+      try {
+        const result = keyUriParser(value);
 
-      accounts.push(account);
+        const accounts: Account[] = JSON.parse(
+          (await EncryptedStorage.getItem('accounts')) || '[]',
+        );
 
-      await EncryptedStorage.setItem('accounts', JSON.stringify(accounts));
-    } catch (error) {
-      console.error(error);
-    }
+        const account: Account = {
+          id: uuidv1(),
+          text: value,
+          ...result,
+        };
 
-    return navigation.navigate('Home');
-  };
+        accounts.push(account);
+
+        await EncryptedStorage.setItem('accounts', JSON.stringify(accounts));
+      } catch (error) {
+        console.error(error);
+      }
+
+      return navigation.navigate('Home');
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -64,13 +79,15 @@ const Scan = ({navigation}: {navigation: any}) => {
           />
         </Pressable>
       </View>
-      {hasPermission === true && (
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleScan}
+      {canScan && (
+        <Camera
+          codeScanner={handleScan}
+          device={device}
+          isActive={isActive}
           style={styles.camera}
         />
       )}
-      {hasPermission === false && (
+      {!canScan && (
         <View style={styles.noPermissionCameraContainer}>
           <Text style={styles.noPermissionCameraText}>
             <Trans>
